@@ -1,6 +1,10 @@
 package main
 
-import ("encoding/json"; "errors")
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+)
 
 // Saver persists the supplied bytes
 type Saver interface {
@@ -27,7 +31,7 @@ func SavePerson(person *Person, saver Saver) error {
 
 // Person data object
 type Person struct {
-	Name string
+	Name  string
 	Phone string
 }
 
@@ -40,12 +44,17 @@ func (p *Person) validate() error {
 	if p.Phone == "" {
 		return errors.New("phone missing")
 	}
-	retunr nil
+	return nil
 }
 
 // convert person into bytes
-func (p *Person) encode() ([]bytes, error){
+func (p *Person) encode() ([]byte, error) {
 	return json.Marshal(p)
+}
+
+// load person by ID
+func loadPerson(ID int) ([]byte, error) {
+	return nil, nil
 }
 
 // LoadPerson will load the requested person by ID.
@@ -58,7 +67,7 @@ func LoadPerson(ID int, decodePerson func(data []byte) *Person) (*Person, error)
 	}
 
 	// load from storage
-	bytes, err := LoadPerson(ID)
+	bytes, err := loadPerson(ID)
 	if err != nil {
 		return nil, err
 	}
